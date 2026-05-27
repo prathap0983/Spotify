@@ -1762,6 +1762,149 @@ body.paused .eq-bar {
     }
 }
 
+@media (max-width: 768px) {
+    body {
+        grid-template-areas: "main-content";
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        padding: 0;
+        gap: 0;
+    }
+    .sidebar {
+        display: none;
+    }
+    .right-panel {
+        display: none;
+    }
+    body.right-panel-active {
+        grid-template-columns: 1fr;
+    }
+    .header-nav {
+        padding: 12px 16px;
+    }
+    .content-view {
+        padding: 0 16px 24px;
+    }
+    .details-hero {
+        height: 260px;
+        padding: 16px 16px 16px;
+    }
+    .details-art {
+        width: 120px;
+        height: 120px;
+    }
+    .details-title {
+        font-size: 32px;
+    }
+    .actions-bar {
+        padding: 16px;
+    }
+    .songs-table-container {
+        padding: 0 16px 24px;
+    }
+    .songs-table th.date-col, .songs-table td.date-col {
+        display: none;
+    }
+    
+    /* Sleek Mini floating mobile player */
+    .player-bar {
+        position: fixed;
+        bottom: 72px;
+        left: 8px;
+        right: 8px;
+        height: 64px;
+        background: rgba(18, 18, 18, 0.95);
+        backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+        z-index: 99;
+        padding: 0 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .player-left {
+        width: 80%;
+        min-width: unset;
+    }
+    .player-center {
+        width: auto;
+        flex-direction: row;
+        justify-content: flex-end;
+        max-width: unset;
+        gap: 0;
+    }
+    /* Hide timeline, prev, next, shuffle, repeat on mobile player bar */
+    .player-center .progress-container,
+    .player-center .control-buttons button:not(#ctrl-play-pause) {
+        display: none;
+    }
+    .player-right {
+        display: none; /* Hide volume/utilities */
+    }
+    .control-btn-play {
+        background-color: transparent;
+        color: #ffffff;
+        width: 44px;
+        height: 44px;
+    }
+    .control-btn-play svg {
+        fill: #ffffff;
+        width: 24px;
+        height: 24px;
+    }
+    
+    /* Padding to ensure content scrolls past bottom overlays */
+    .main-content-scroll {
+        padding-bottom: 150px;
+    }
+
+    /* Bottom mobile navigation bar */
+    .mobile-bottom-nav {
+        display: flex !important;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        background-color: #000000;
+        border-top: 1px solid var(--border-color);
+        z-index: 100;
+        justify-content: space-around;
+        align-items: center;
+        padding: 4px 0;
+    }
+    .mobile-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 600;
+        gap: 4px;
+        width: 30%;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    .mobile-nav-item svg {
+        width: 20px;
+        height: 20px;
+        transition: transform 0.2s;
+    }
+    .mobile-nav-item:hover svg {
+        transform: scale(1.05);
+    }
+    .mobile-nav-item.active {
+        color: var(--text-primary);
+    }
+    .mobile-nav-item.active svg {
+        color: var(--spotify-green);
+    }
+}
+
 @media (max-width: 480px) {
     .details-hero-content {
         flex-direction: column;
@@ -1785,4 +1928,9 @@ body.paused .eq-bar {
     .standard-card {
         padding: 8px;
     }
+}
+
+/* Hide mobile bottom navigation bar on desktop by default */
+.mobile-bottom-nav {
+    display: none;
 }

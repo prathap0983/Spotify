@@ -119,6 +119,50 @@ const tracksData = [
             { time: 110, text: "My type, ultra slowed..." },
             { time: 120, text: "🎵 [Warm Synth Wave Outro]" }
         ]
+    },
+    {
+        id: 4,
+        title: "FUNK CRIMINAL (Super Slowed)",
+        artist: "Funk Criminal",
+        album: "Brazilian Phonk - Single",
+        src: "https://res.cloudinary.com/doqs8onra/video/upload/v1779904911/FUNK_CRIMINAL_SUPER_SLOWED_1080P_HD_smbihd.mp4",
+        cover: "assets/funk_criminal.png",
+        duration: "2:20",
+        color: "rgb(244, 67, 54)",
+        colorRGB: "244, 67, 54",
+        lyrics: [
+            { time: 0, text: "🎵 [Heavy Phonk Cowbell Intro]" },
+            { time: 10, text: "Funk Criminal, slowed and heavy..." },
+            { time: 20, text: "Brazilian Phonk vibes rocking the street 🚗" },
+            { time: 30, text: "Heavy bass knocking off your feet" },
+            { time: 40, text: "💥 [Aggressive Cowbell Drop]" },
+            { time: 60, text: "Gritty street racing in the night" },
+            { time: 80, text: "Phonk bass pounding till the light" },
+            { time: 100, text: "Slowed reverb, drift control" },
+            { time: 120, text: "🎵 [Heavy Phonk Bass Outro]" }
+        ]
+    },
+    {
+        id: 5,
+        title: "MONTAGEM SUPERSONIC (Slowed)",
+        artist: "Brazilian Phonk",
+        album: "Supersonic Phonk Hits",
+        src: "https://res.cloudinary.com/doqs8onra/video/upload/v1779904914/MONTAGEM_SUPERSONIC_Slowed_Reverb_BRAZILIAN_PHONK_MP3_320K_jkzdgx.mp3",
+        cover: "assets/montagem_supersonic.png",
+        duration: "2:46",
+        color: "rgb(76, 175, 80)",
+        colorRGB: "76, 175, 80",
+        lyrics: [
+            { time: 0, text: "🎵 [Supersonic Synth Intro]" },
+            { time: 8, text: "Brazilian Phonk, supersonic speed ⚡" },
+            { time: 16, text: "Slowed down reverb is all we need" },
+            { time: 24, text: "⚡ [Melodic Supersonic Phonk Drop]" },
+            { time: 44, text: "Cruising through the neon hyperdrive" },
+            { time: 64, text: "Heavy sub bass makes you feel alive 🔊" },
+            { time: 84, text: "Drift left, drift right, supersonic flow" },
+            { time: 104, text: "Phonk beats taking over the show" },
+            { time: 124, text: "🎵 [Supersonic Phonk Outro]" }
+        ]
     }
 ];
 
@@ -323,6 +367,14 @@ function applyViewTransition(viewName, playlistId = null) {
     el.navSearch.classList.remove('active');
     el.likedSongsPlaylistItem.classList.remove('active');
     document.querySelectorAll('.playlist-item').forEach(item => item.classList.remove('active'));
+
+    // Remove active styles on all mobile bottom nav items
+    const mobHome = document.getElementById('mobile-nav-home');
+    const mobSearch = document.getElementById('mobile-nav-search');
+    const mobLibrary = document.getElementById('mobile-nav-library');
+    if (mobHome) mobHome.classList.remove('active');
+    if (mobSearch) mobSearch.classList.remove('active');
+    if (mobLibrary) mobLibrary.classList.remove('active');
     
     // Hide all views
     el.viewHome.classList.remove('active');
@@ -331,12 +383,14 @@ function applyViewTransition(viewName, playlistId = null) {
     
     if (viewName === 'home') {
         el.navHome.classList.add('active');
+        if (mobHome) mobHome.classList.add('active');
         el.viewHome.classList.add('active');
         // Reset dynamic body glow to currently active playing song color
         updateDynamicGlow(tracksData[currentTrackIndex].colorRGB);
     } 
     else if (viewName === 'search') {
         el.navSearch.classList.add('active');
+        if (mobSearch) mobSearch.classList.add('active');
         el.viewSearch.classList.add('active');
         updateDynamicGlow("83, 83, 83"); // neutral gray
         el.searchInputField.focus();
@@ -345,6 +399,10 @@ function applyViewTransition(viewName, playlistId = null) {
         el.viewPlaylistDetail.classList.add('active');
         activePlaylistId = playlistId;
         renderPlaylistDetails(playlistId);
+        
+        if (playlistId === 'all') {
+            if (mobLibrary) mobLibrary.classList.add('active');
+        }
     }
     
     // Scroll back to top
@@ -376,6 +434,14 @@ function setupNavListeners() {
     el.navHome.addEventListener('click', () => navigateToView('home'));
     el.navSearch.addEventListener('click', () => navigateToView('search'));
     el.navLibrary.addEventListener('click', () => navigateToView('playlist-detail', 'all'));
+
+    // Mobile navigation items
+    const mobHome = document.getElementById('mobile-nav-home');
+    const mobSearch = document.getElementById('mobile-nav-search');
+    const mobLibrary = document.getElementById('mobile-nav-library');
+    if (mobHome) mobHome.addEventListener('click', () => navigateToView('home'));
+    if (mobSearch) mobSearch.addEventListener('click', () => navigateToView('search'));
+    if (mobLibrary) mobLibrary.addEventListener('click', () => navigateToView('playlist-detail', 'all'));
     
     el.likedSongsPlaylistItem.addEventListener('click', () => {
         navigateToView('playlist-detail', 'liked');
